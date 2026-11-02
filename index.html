@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#101014">
+<title>GAMEVERSE — Crime Empire</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<style>
+:root{--bg:#0d0d12;--panel:#17171f;--panel2:#20202b;--line:#30303d;--text:#f4f1ed;--muted:#9895a2;--gold:#e9b65b;--red:#ef5b55;--green:#79d69a}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% -15%,#39221f 0%,#15131a 42%,var(--bg) 78%);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;min-height:100vh}
+button{font:inherit;color:inherit;border:0;cursor:pointer}.app{max-width:520px;margin:auto;padding:16px 14px 92px}
+.top{display:flex;justify-content:space-between;align-items:center;margin:6px 2px 16px}.brand{font-weight:950;letter-spacing:2px;font-size:20px}.brand span{color:var(--gold)}.rank{font-size:11px;color:var(--gold);border:1px solid #72552e;border-radius:20px;padding:6px 10px;background:#2b2118}
+.hero{position:relative;overflow:hidden;border:1px solid #51352e;border-radius:22px;padding:20px;background:linear-gradient(115deg,#38201d,#1b1921 58%,#14141b);min-height:180px;box-shadow:0 18px 50px #0007}
+.hero:after{content:"♜";position:absolute;right:12px;bottom:-42px;font-size:180px;color:#ffffff0b;transform:rotate(-8deg)}
+.eyebrow{font-size:10px;letter-spacing:2px;color:#e5a66b;font-weight:800}.hero h1{font-size:26px;line-height:1.05;margin:9px 0 8px;max-width:270px}.hero p{font-size:12px;color:#c5b8b4;max-width:260px;line-height:1.5;margin:0}.hero .district{margin-top:16px;font-size:11px;color:var(--gold)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:12px 0}.stat,.card{background:linear-gradient(145deg,#1d1d27,#15151c);border:1px solid var(--line);border-radius:16px;padding:13px}.stat small{display:block;color:var(--muted);font-size:10px;margin-bottom:6px}.stat strong{font-size:17px}.stat strong.gold{color:var(--gold)}
+.section{display:flex;align-items:center;justify-content:space-between;margin:21px 2px 10px}.section h2{font-size:15px;margin:0}.section small{font-size:10px;color:var(--muted)}
+.action{display:flex;gap:10px;align-items:center;background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:12px;margin-bottom:8px}.ico{width:42px;height:42px;display:grid;place-items:center;border-radius:12px;background:#30241f;font-size:21px}.action .info{flex:1;min-width:0}.action b{font-size:13px}.action p{margin:4px 0 0;color:var(--muted);font-size:10px;line-height:1.4}.btn{background:linear-gradient(135deg,#e9b65b,#bd783b);color:#20160e;font-weight:900;font-size:11px;padding:10px 12px;border-radius:10px;white-space:nowrap}.btn:disabled{opacity:.4;cursor:not-allowed}.btn.secondary{background:#302b32;color:#e6d8cf;border:1px solid #51444b}.grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.upgrade{background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:12px}.upgrade .uhead{display:flex;justify-content:space-between;align-items:center}.upgrade .uico{font-size:22px}.upgrade b{font-size:12px}.upgrade p{font-size:10px;color:var(--muted);min-height:27px;margin:7px 0}.upgrade .cost{font-size:10px;color:var(--gold);margin-bottom:8px}.upgrade button{width:100%}
+.nav{position:fixed;bottom:0;left:0;right:0;background:#111117ed;backdrop-filter:blur(16px);border-top:1px solid #30303b;display:flex;justify-content:center;z-index:4}.navin{width:min(520px,100%);display:grid;grid-template-columns:repeat(4,1fr);padding:8px 8px max(8px,env(safe-area-inset-bottom))}.nav button{background:none;color:#8e8b98;font-size:9px;padding:5px}.nav button span{display:block;font-size:19px;margin-bottom:3px}.nav button.active{color:var(--gold)}
+.toast{position:fixed;top:18px;left:50%;transform:translateX(-50%);background:#29252a;border:1px solid #66513d;padding:10px 15px;border-radius:12px;font-size:12px;z-index:10;opacity:0;pointer-events:none;transition:.2s}.toast.show{opacity:1}
+.modalback{position:fixed;inset:0;background:#000a;display:none;align-items:center;justify-content:center;padding:20px;z-index:8}.modalback.show{display:flex}.modal{width:100%;max-width:380px;background:#1b1a22;border:1px solid #5a4938;border-radius:20px;padding:20px}.modal h3{margin:0 0 8px}.modal p{color:var(--muted);font-size:12px;line-height:1.5}.modal .btn{width:100%;margin-top:8px}
+.mission{display:flex;align-items:center;gap:10px}.mission .info{flex:1}.progress{height:5px;background:#35313a;border-radius:8px;margin-top:7px;overflow:hidden}.progress i{display:block;height:100%;background:var(--gold);width:0}
+.hidden{display:none!important}.foot{text-align:center;color:#65616d;font-size:9px;margin:20px 0}
+@media(min-width:520px){.app{padding-top:24px}.hero h1{font-size:30px}}
+</style>
+</head>
+<body>
+<div class="app">
+ <header class="top"><div class="brand">GAME<span>VERSE</span></div><div class="rank" id="rank">НОВИЧОК · УР. 1</div></header>
+ <section class="hero"><div class="eyebrow">CRIME EMPIRE / SEASON 01</div><h1>Твой город.<br>Твои правила.</h1><p>Построй империю, расширяй влияние и стань легендой ночного города.</p><div class="district">⌖ Район: Старый порт</div></section>
+ <div class="stats">
+  <div class="stat"><small>💵 КАПИТАЛ</small><strong class="gold" id="cash">500</strong></div>
+  <div class="stat"><small>⚡ ДОХОД / МИН</small><strong id="income">10</strong></div>
+  <div class="stat"><small>♟ ВЛИЯНИЕ</small><strong id="influence">0</strong></div>
+ </div>
+ <main id="home">
+  <div class="section"><h2>Быстрые действия</h2><small>РАЗВИВАЙ ИМПЕРИЮ</small></div>
+  <div class="action"><div class="ico">🏙️</div><div class="info"><b>Собрать доход</b><p>Забери прибыль своих легальных заведений.</p></div><button class="btn" id="collect">+ Доход</button></div>
+  <div class="action"><div class="ico">🤝</div><div class="info"><b>Найти союзника</b><p>Расширь сеть контактов и получи влияние.</p></div><button class="btn secondary" id="ally">+ Влияние</button></div>
+  <div class="section"><h2>Задание дня</h2><small>ОБНОВЛЯЕТСЯ ЕЖЕДНЕВНО</small></div>
+  <div class="card mission"><div class="ico">📦</div><div class="info"><b>Развить бизнес</b><p>Купи 1 улучшение района</p><div class="progress"><i id="missionbar"></i></div></div><button class="btn secondary" id="missionReward" disabled>Награда</button></div>
+  <div class="section"><h2>Недвижимость и бизнес</h2><small>УЛУЧШЕНИЯ</small></div>
+  <div class="grid" id="upgrades"></div>
+ </main>
+ <main id="missions" class="hidden">
+  <div class="section"><h2>Контракты города</h2><small>БЕЗОПАСНЫЕ ИГРОВЫЕ ЗАДАНИЯ</small></div>
+  <div class="action"><div class="ico">🧹</div><div class="info"><b>Навести порядок</b><p>Собери доход 3 раза. Награда: 150 💵</p><p id="collectProgress">Прогресс: 0/3</p></div></div>
+  <div class="action"><div class="ico">🏗️</div><div class="info"><b>Первый актив</b><p>Купи любое улучшение. Награда: 100 💵</p></div><span id="assetStatus">0/1</span></div>
+ </main>
+ <main id="premium" class="hidden">
+  <div class="section"><h2>Клуб владельцев</h2><small>PREMIUM</small></div>
+  <div class="hero" style="min-height:0"><div class="eyebrow">GAMEVERSE GOLD</div><h1>Больше возможностей.</h1><p>Премиум-статус, особая рамка профиля и бонусы прогресса.</p><div class="district">В демо-версии покупка отключена.</div></div>
+  <div class="action"><div class="ico">👑</div><div class="info"><b>Gold на 30 дней</b><p>+20% к игровому доходу, эксклюзивный значок.</p></div><button class="btn" id="premiumBuy">Подробнее</button></div>
+  <p style="font-size:10px;color:var(--muted);line-height:1.5">Реальные платежи подключаются через Telegram Stars после настройки бота и серверной проверки платежей. Сейчас это только демонстрационный экран.</p>
+ </main>
+ <main id="profile" class="hidden">
+  <div class="section"><h2>Профиль босса</h2><small>ТВОЯ СТАТИСТИКА</small></div>
+  <div class="card"><div style="font-size:36px">🕴️</div><h2 id="playerName">Новый игрок</h2><p style="font-size:11px;color:var(--muted)">Глава района Старый порт</p><div class="stats"><div class="stat"><small>УРОВЕНЬ</small><strong id="level">1</strong></div><div class="stat"><small>АКТИВЫ</small><strong id="assets">0</strong></div><div class="stat"><small>СБОРЫ</small><strong id="collects">0</strong></div></div></div>
+  <button class="btn secondary" style="width:100%;margin-top:10px" id="reset">Сбросить демо-прогресс</button>
+ </main>
+ <div class="foot">GAMEVERSE · DEMO BUILD 0.1 · Игровая валюта не имеет денежной стоимости</div>
+</div>
+<nav class="nav"><div class="navin">
+ <button class="active" data-tab="home"><span>🏙️</span>Империя</button>
+ <button data-tab="missions"><span>📜</span>Задания</button>
+ <button data-tab="premium"><span>👑</span>Премиум</button>
+ <button data-tab="profile"><span>🕴️</span>Профиль</button>
+</div></nav>
+<div class="toast" id="toast"></div>
+<div class="modalback" id="modal"><div class="modal"><h3 id="modalTitle">GAMEVERSE</h3><p id="modalText"></p><button class="btn" id="modalClose">Понятно</button></div></div>
+<script>
+const tg=window.Telegram?.WebApp; if(tg){tg.ready();tg.expand();try{tg.setHeaderColor('#101014');tg.setBackgroundColor('#0d0d12')}catch(e){}}
+const $=id=>document.getElementById(id);
+const defaults={cash:500,income:10,influence:0,assets:0,collects:0,upgrades:[],missionDone:false,premium:false};
+let s={...defaults,...JSON.parse(localStorage.getItem('gv-save')||'{}')};
+const items=[
+ {id:'cafe',name:'Кофейня',ico:'☕',desc:'Небольшой бизнес с постоянным доходом.',cost:250,inc:8},
+ {id:'garage',name:'Автомастерская',ico:'🔧',desc:'Надёжный источник прибыли района.',cost:600,inc:18},
+ {id:'club',name:'Ночной клуб',ico:'🎧',desc:'Популярное место и новые знакомства.',cost:1200,inc:40},
+ {id:'hotel',name:'Отель',ico:'🏨',desc:'Престижный актив для растущей империи.',cost:3000,inc:100}
+];
+function save(){localStorage.setItem('gv-save',JSON.stringify(s));render()}
+function fmt(n){return Math.floor(n).toLocaleString('ru-RU')}
+function toast(t){$('toast').textContent=t;$('toast').classList.add('show');setTimeout(()=>$('toast').classList.remove('show'),1800)}
+function modal(t,p){$('modalTitle').textContent=t;$('modalText').textContent=p;$('modal').classList.add('show')}
+function render(){
+ $('cash').textContent=fmt(s.cash);$('income').textContent=fmt(s.income*(s.premium?1.2:1));$('influence').textContent=fmt(s.influence);
+ $('rank').textContent=(s.influence>=500?'ЛЕГЕНДА':s.influence>=100?'КАПО':'НОВИЧОК')+' · УР. '+(1+Math.floor(s.influence/100));
+ $('level').textContent=1+Math.floor(s.influence/100);$('assets').textContent=s.assets;$('collects').textContent=s.collects;
+ $('collectProgress').textContent=`Прогресс: ${Math.min(s.collects,3)}/3`;$('assetStatus').textContent=Math.min(s.assets,1)+'/1';
+ $('missionbar').style.width=(s.assets?100:0)+'%';$('missionReward').disabled=!!s.missionDone||!s.assets;
+ $('missionReward').textContent=s.missionDone?'Получено':'Награда';
+ $('playerName').textContent=tg?.initDataUnsafe?.user?.first_name||'Новый игрок';
+ $('upgrades').innerHTML=items.map(x=>{let bought=s.upgrades.includes(x.id);return `<div class="upgrade"><div class="uhead"><span class="uico">${x.ico}</span><span style="font-size:9px;color:#79d69a">+${x.inc}/мин</span></div><b>${x.name}</b><p>${x.desc}</p><div class="cost">${bought?'УЖЕ ПРИОБРЕТЕНО':'💵 '+fmt(x.cost)}</div><button class="btn ${bought?'secondary':''}" ${bought||s.cash<x.cost?'disabled':''} data-buy="${x.id}">${bought?'Построено':'Купить'}</button></div>`}).join('');
+}
+$('upgrades').addEventListener('click',e=>{let id=e.target.dataset.buy;if(!id)return;let x=items.find(a=>a.id===id);if(!x||s.upgrades.includes(id)||s.cash<x.cost)return;s.cash-=x.cost;s.income+=x.inc;s.influence+=20;s.assets++;s.upgrades.push(id);toast('Актив приобретён! +20 влияния');save()});
+$('collect').onclick=()=>{let gain=Math.floor(s.income*(s.premium?1.2:1));s.cash+=gain;s.collects++;toast('Получено '+fmt(gain)+' 💵');save()};
+$('ally').onclick=()=>{s.influence+=5;toast('Новый контакт! +5 влияния');save()};
+$('missionReward').onclick=()=>{if(s.assets&&!s.missionDone){s.cash+=100;s.missionDone=true;toast('Награда: 100 💵');save()}};
+$('premiumBuy').onclick=()=>modal('GAMEVERSE GOLD','Премиум-покупки пока не подключены. В рабочей версии добавим оплату Telegram Stars, подтверждение платежа на сервере и выдачу статуса после успешной оплаты.');
+$('modalClose').onclick=()=>$('modal').classList.remove('show');
+document.querySelectorAll('.nav button').forEach(b=>b.onclick=()=>{document.querySelectorAll('.nav button').forEach(x=>x.classList.toggle('active',x===b));['home','missions','premium','profile'].forEach(id=>$(id).classList.toggle('hidden',id!==b.dataset.tab))});
+$('reset').onclick=()=>{if(confirm('Сбросить весь демо-прогресс?')){s={...defaults,upgrades:[]};save();toast('Прогресс сброшен')}};
+setInterval(()=>{s.cash+=Math.floor(s.income*(s.premium?1.2:1)/60);save()},60000);
+render();
+</script>
+</body></html>
